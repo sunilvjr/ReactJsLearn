@@ -1,12 +1,14 @@
-import { Route } from "react-router-dom/cjs/react-router-dom";
+import { Route } from "react-router-dom";
 import MainPage from "../pages/mainPage/MainPage";
-import AddTodo from "../pages/add-Todo/AddTodo";
+import AddTodo from "../pages/add-todo/AddTodo";
+import ViewPage from "../pages/viewPage/ViewPage";
 
 const Routes = () => {
   return (
     <>
-      <Route path="/" component="{MainPage}" exact></Route>
-      <Route path="/Add" component="{AddTodo}"></Route>
+      <Route path="/" component={MainPage} exact></Route>
+      <Route path="/Add" component={AddTodo} exact></Route>
+      <Route path="/View/:id" component={ViewPage} exact></Route>
     </>
   );
 };
