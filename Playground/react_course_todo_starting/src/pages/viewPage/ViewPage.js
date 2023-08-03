@@ -1,5 +1,7 @@
+import { Link, Route } from "react-router-dom";
 import NavBar from "../NavBar";
 import { useHistory, useParams, useLocation } from "react-router-dom";
+import AuthCheckBoolean from "../../middleware/AuthCheckBoolean";
 
 const ViewPage = () => {
   const hitory = useHistory();
@@ -61,10 +63,23 @@ const ViewPage = () => {
         >
           {getData}
         </div>
+        {AuthCheckBoolean() ? (
+          <>
+            <button onClick={deleteTodo} style={{ background: "red" }}>
+              Delete Todo
+            </button>
+          </>
+        ) : (
+          <>
+            <p>
+              Please <Link to="'Login">login</Link> to see more options.
+            </p>
+          </>
+        )}
 
-        <button onClick={deleteTodo} style={{ background: "red" }}>
-          Delete Todo
-        </button>
+        <Route path="/view/:id/data">
+          <div>Some data...</div>
+        </Route>
       </div>
     </>
   );
