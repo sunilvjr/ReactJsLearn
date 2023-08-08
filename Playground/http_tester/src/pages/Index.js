@@ -88,6 +88,7 @@ const Index = () => {
 
   return (
     <div className="App">
+      <Link to="/AddMovie">Add Movie</Link>
       <div>
         <input
           type="text"
