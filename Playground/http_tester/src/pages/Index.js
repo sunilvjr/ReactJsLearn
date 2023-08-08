@@ -11,6 +11,12 @@ const Index = () => {
 
   const [movieNameText, setMovieNameText] = useState("");
 
+  const [searchErrorText, setSearchErrorText] = useState("");
+
+  const [loading, setLoading] = useState(false);
+
+  const [firstRun, setFirstRun] = useState(true);
+
   useEffect(() => {
     console.log("First time running..");
     fetchMovies();
@@ -18,15 +24,34 @@ const Index = () => {
 
   useEffect(() => {
     //Searching code....
-    console.log("Search Text changed..");
-    setTimeout(() => {
-      fetchMovies();
-    }, 2000);
+    if (!firstRun) {
+      console.log("Search Text changed..");
+
+      const fetchTimer = setTimeout(() => {
+        if (movieNameText && movieNameText.length > 2) {
+          fetchMovies();
+          setSearchErrorText("");
+        } else if (movieNameText.length < 1) {
+          fetchMovies();
+          setSearchErrorText("");
+        } else {
+          setSearchErrorText(
+            "Please enter atleast 3 characters for searching."
+          );
+        }
+      }, 2000);
+
+      //Cleanup function as debouncer....
+      return () => {
+        clearTimeout(fetchTimer);
+      };
+    }
   }, [movieNameText]);
 
   const fetchMovies = async () => {
     //Fetch Resource...
     console.log("Calling api...");
+    setLoading(true);
 
     try {
       const response = await axios.get(
@@ -34,9 +59,13 @@ const Index = () => {
       );
       setMovies(response.data.moviesData);
       setIsError(false);
+      setLoading(false);
+      setFirstRun(false);
     } catch (error) {
       setIsError(true);
+      setLoading(false);
       setErrorText("Cannot get movie data.");
+      setFirstRun(false);
     }
     console.log(movies);
     //console.log(response);
@@ -68,6 +97,7 @@ const Index = () => {
             setMovieNameText(e.target.value);
           }}
         ></input>
+        <span style={{ color: "red" }}>{searchErrorText}</span>
       </div>
       <b>Suggested Movies</b>
       <br />
@@ -90,20 +120,32 @@ const Index = () => {
           <div
             style={{ background: "#e7e7e7", padding: "5px", margin: "10px" }}
           >
-            {movies.map((el) => (
-              <div key={el.id}>
-                <Link to={`/view_movie/${el.id}`}>
-                  <b>{el.name}</b>
-                </Link>
-                <br />
-                <img src={el.image} alt="Movie" style={{ height: "100px" }} />
-                <br />
-                <b>Info</b>: {el.info}
-                <br />
-                <b>Rating</b>: {el.rating ? el.rating : 0}
-                <br /> <br />
-              </div>
-            ))}
+            {/* Loading */}
+            <div>{loading ? <>Loading....</> : <></>}</div>
+            {movies && movies.length > 0 && !loading ? (
+              <>
+                {movies.map((el) => (
+                  <div key={el.id}>
+                    <Link to={`/view_movie/${el.id}`}>
+                      <b>{el.name}</b>
+                    </Link>
+                    <br />
+                    <img
+                      src={el.image}
+                      alt="Movie"
+                      style={{ height: "100px" }}
+                    />
+                    <br />
+                    <b>Info</b>: {el.info}
+                    <br />
+                    <b>Rating</b>: {el.rating ? el.rating : 0}
+                    <br /> <br />
+                  </div>
+                ))}
+              </>
+            ) : (
+              <>{!loading ? <>No movie found!</> : <></>}</>
+            )}
           </div>
         </>
       )}
