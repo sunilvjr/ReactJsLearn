@@ -1,15 +1,38 @@
 import { Navbar, Container } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const MyNavbar = () => {
   return (
     <>
-      <Navbar className="bg-body-tertiary">
+      <Navbar className="bg-dark ">
         <Container>
-          <Navbar.Brand href="#home">Navbar with text</Navbar.Brand>
+          <Navbar.Brand href="#home" className="text-light">
+            <Link to="/" className="text-light">
+              Movie Suggester
+            </Link>
+          </Navbar.Brand>
           <Navbar.Toggle />
-          <Navbar.Collapse className="justify-content-end">
+          <Navbar.Collapse className="justify-content-end text-light gap-2">
             <Navbar.Text>
-              Signed in as: <a href="#login">Mark Otto</a>
+              <Link to="/AddMovie" className="text-light">
+                Add Movie
+              </Link>
+            </Navbar.Text>
+            |
+            <Navbar.Text>
+              {localStorage.getItem("accessToken") ? (
+                <>
+                  <Link to="/Profile" className="text-light">
+                    Profile
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link to="/Login" className="text-light">
+                    Login
+                  </Link>
+                </>
+              )}
             </Navbar.Text>
           </Navbar.Collapse>
         </Container>

@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import MyNavbar from "../components/MyNavbar";
+import { Container, Button } from "react-bootstrap";
 
 const Profile = () => {
   //For navigation
@@ -48,19 +49,24 @@ const Profile = () => {
   //UI
   return (
     <>
-      <Link to="/">Home</Link>
+      <MyNavbar />
       <br />
-      <b>My Profile</b>|
-      <button type="submit" onClick={LogoutHandler}>
-        Logout
-      </button>
-      <br /> <br />
-      Name:{userData.name}
-      <br />
-      Email:{userData.email}
-      <br />
-      Country:{userData.country}
-      <br />
+      <Container>
+        <h3>My Profile</h3>
+        {/* <button type="submit" onClick={LogoutHandler}>
+          Logout
+        </button> */}
+        <br /> <br />
+        Name:{userData.name}
+        <br />
+        Email:{userData.email}
+        <br />
+        Country:{userData.country}
+        <br /> <br />
+        <Button variant="danger" type="button" onClick={LogoutHandler}>
+          Login
+        </Button>
+      </Container>
     </>
   );
 };

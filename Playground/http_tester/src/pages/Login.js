@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useRef } from "react";
 import { useHistory } from "react-router-dom";
+import MyNavbar from "../components/MyNavbar";
+import { Container, Form, Button } from "react-bootstrap";
 
 const Login = () => {
   const history = useHistory();
@@ -45,22 +47,49 @@ const Login = () => {
   //UI part
   return (
     <>
-      <b>Login</b>
-      <br />
-      <br />
-      <form onSubmit={LoginHandler}>
-        <b>Email</b>
+      <MyNavbar />
+      <Container>
         <br />
-        <input type="text" ref={email_ref}></input>
+        <h3>Login</h3>
         <br />
-        <br />
-        <b>Password</b>
-        <br />
-        <input type="password" ref={password_ref}></input>
-        <br />
-        <br />
-        <button type="submit">Login</button>
-      </form>
+        <form onSubmit={LoginHandler}>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              ref={email_ref}
+              autoComplete="false"
+            />
+            {/* <Form.Text className="text-muted">
+              We'll never share your email with anyone else.
+            </Form.Text> */}
+          </Form.Group>
+          {/* <b>Email</b>
+          <br />
+          <input type="text" ref={email_ref}></input>
+          <br />
+          <br /> */}
+          {/* <b>Password</b>
+          <br />
+          <input type="password" ref={password_ref}></input>
+          <br /> */}
+
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              ref={password_ref}
+            />
+          </Form.Group>
+
+          <Button variant="dark" type="submit">
+            Login
+          </Button>
+          {/* <button type="submit">Login</button> */}
+        </form>
+      </Container>
     </>
   );
 };

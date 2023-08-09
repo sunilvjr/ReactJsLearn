@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import MyNavbar from "../components/MyNavbar";
 
 const ViewMovie = () => {
   console.log("View page");
@@ -44,6 +45,7 @@ const ViewMovie = () => {
 
   return (
     <>
+      <MyNavbar></MyNavbar>
       <b>View Movie {getId}</b>
       {/* <button onClick={GetMovieDetail}>View Movie Detail</button> */}
       <br /> <br />

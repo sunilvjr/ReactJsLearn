@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useRef } from "react";
-import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import MyNavbar from "../components/MyNavbar";
+import { Container, Form, Button } from "react-bootstrap";
 
 const AddMovie = () => {
   const movie_name_ref = useRef();
@@ -41,32 +42,34 @@ const AddMovie = () => {
 
   return (
     <>
-      <Link to="">Home</Link>
-      <br />
-      <br />
-      <b>Add Movie</b>
-      <br />
-      <br />
-      <form onSubmit={AddMovieHandler}>
-        <b>Movie name</b>
+      <MyNavbar />
+      <Container>
         <br />
-        <input type="text" placeholder="Movie name" ref={movie_name_ref} />
-        <br /> <br />
-        <b>Description</b>
+        <h3>Add Movie</h3>
         <br />
-        <textarea
-          placeholder="Movie Description"
-          ref={movie_desc_ref}
-          rows="5"
-        />
-        <br /> <br />
-        <b>Rating</b>
-        <br />
-        <input type="text" placeholder="Movie Rating" ref={movie_rating_ref} />
-        <br />
-        <br />
-        <button type="submit">Add Movie</button>
-      </form>
+        <form onSubmit={AddMovieHandler}>
+          <Form.Group className="mb-3" controlId="formBasicMovieName">
+            <Form.Label>Movie name</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Movie name"
+              ref={movie_name_ref}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicMovieDescription">
+            <Form.Label>Description</Form.Label>
+            <Form.Control as="textarea" ref={movie_desc_ref} />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicMovieRating">
+            <Form.Label>Rating</Form.Label>
+            <Form.Control type="number" ref={movie_rating_ref} />
+          </Form.Group>
+          <Button variant="dark" type="submit">
+            Add Movie
+          </Button>
+        </form>
+      </Container>
     </>
   );
 };

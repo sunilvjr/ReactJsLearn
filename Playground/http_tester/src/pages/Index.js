@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import MyNavbar from "../components/MyNavbar";
 
 const Index = () => {
   const [movies, setMovies] = useState([]);
@@ -88,16 +89,7 @@ const Index = () => {
 
   return (
     <div className="App">
-      <Link to="/AddMovie">Add Movie</Link>|
-      {localStorage.getItem("accessToken") ? (
-        <>
-          <Link to="/Profile">Profile</Link>
-        </>
-      ) : (
-        <>
-          <Link to="/Login">Login</Link>
-        </>
-      )}
+      <MyNavbar></MyNavbar>
       <div>
         <input
           type="text"
