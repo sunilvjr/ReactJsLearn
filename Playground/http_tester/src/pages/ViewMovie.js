@@ -2,6 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import MyNavbar from "../components/MyNavbar";
+import { Container, Card, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const ViewMovie = () => {
   console.log("View page");
@@ -46,17 +48,37 @@ const ViewMovie = () => {
   return (
     <>
       <MyNavbar></MyNavbar>
-      <b>View Movie {getId}</b>
-      {/* <button onClick={GetMovieDetail}>View Movie Detail</button> */}
-      <br /> <br />
-      Movie Detail :<br />
-      Movie name: {movieData.name} <br />
-      Info: {movieData.info} <br />
-      Desc: {movieData.desc} <br />
-      Image: <br />
-      <img src={movieData.image} alt="Movie" style={{ height: "100px" }} />
-      <br />
-      Rating: {movieData.rating} <br />
+      <Container>
+        <h1 className="text-info">{movieData.name}</h1>
+        <br /> <br />
+        <Card>
+          <Card.Body>{movieData.info}</Card.Body>
+        </Card>
+        <br />
+        <Card>
+          <Card.Body> {movieData.desc}</Card.Body>
+        </Card>
+        <br />
+        <Card>
+          <Card.Body>
+            Image: <br />
+            <img
+              src={movieData.image}
+              alt="Movie"
+              style={{ height: "100px" }}
+            />
+          </Card.Body>
+        </Card>
+        <br />
+        <Card>
+          <Card.Body>Rating: {movieData.rating}</Card.Body>
+        </Card>
+        <br />
+        <Link to="/">
+          <Button className="bg-dark text-white">Go back</Button>
+        </Link>
+        <br /> <br />
+      </Container>
     </>
   );
 };

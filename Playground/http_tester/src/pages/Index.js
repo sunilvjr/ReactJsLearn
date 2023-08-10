@@ -1,7 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+
 import MyNavbar from "../components/MyNavbar";
+import SingleMovie from "../components/SingleMovie";
+import { Row, Form, Container, Spinner } from "react-bootstrap";
 
 const Index = () => {
   const [movies, setMovies] = useState([]);
@@ -40,7 +42,7 @@ const Index = () => {
             "Please enter atleast 3 characters for searching."
           );
         }
-      }, 2000);
+      }, 800);
 
       //Cleanup function as debouncer....
       return () => {
@@ -90,16 +92,21 @@ const Index = () => {
   return (
     <div className="App">
       <MyNavbar></MyNavbar>
-      <div>
-        <input
-          type="text"
-          value={movieNameText}
-          placeholder="Type movie name"
-          onChange={(e) => {
-            setMovieNameText(e.target.value);
-          }}
-        ></input>
-        <span style={{ color: "red" }}>{searchErrorText}</span>
+      <div className="text-center mt-2">
+        <Container>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Control
+              type="text"
+              placeholder="Type movie name"
+              value={movieNameText}
+              onChange={(e) => {
+                setMovieNameText(e.target.value);
+              }}
+              autoComplete="false"
+            />
+          </Form.Group>
+          <span style={{ color: "red" }}>{searchErrorText}</span>
+        </Container>
       </div>
       <b>Suggested Movies</b>
       <br />
@@ -123,27 +130,26 @@ const Index = () => {
             style={{ background: "#e7e7e7", padding: "5px", margin: "10px" }}
           >
             {/* Loading */}
-            <div>{loading ? <>Loading....</> : <></>}</div>
+            <div>
+              {loading ? (
+                <>
+                  <Container className="text-center">
+                    <Spinner animation="border" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                  </Container>
+                </>
+              ) : (
+                <></>
+              )}
+            </div>
             {movies && movies.length > 0 && !loading ? (
               <>
-                {movies.map((el) => (
-                  <div key={el.id}>
-                    <Link to={`/view_movie/${el.id}`}>
-                      <b>{el.name}</b>
-                    </Link>
-                    <br />
-                    <img
-                      src={el.image}
-                      alt="Movie"
-                      style={{ height: "100px" }}
-                    />
-                    <br />
-                    <b>Info</b>: {el.info}
-                    <br />
-                    <b>Rating</b>: {el.rating ? el.rating : 0}
-                    <br /> <br />
-                  </div>
-                ))}
+                <Row>
+                  {movies.map((el) => (
+                    <SingleMovie data={el} />
+                  ))}
+                </Row>
               </>
             ) : (
               <>{!loading ? <>No movie found!</> : <></>}</>

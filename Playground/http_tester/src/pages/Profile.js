@@ -2,13 +2,17 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import MyNavbar from "../components/MyNavbar";
-import { Container, Button } from "react-bootstrap";
+import { Container, Button, Modal } from "react-bootstrap";
 
 const Profile = () => {
   //For navigation
   const history = useHistory();
 
   const [userData, setUserData] = useState({});
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState(
+    "Do you want to logged out?"
+  );
 
   useEffect(() => {
     getProfile();
@@ -42,8 +46,9 @@ const Profile = () => {
   //Event Handler
   const LogoutHandler = (e) => {
     e.preventDefault();
-    localStorage.removeItem("accessToken");
-    history.replace("/");
+    // localStorage.removeItem("accessToken");
+    // history.replace("/");
+    setShowModal(true);
   };
 
   //UI
@@ -67,6 +72,38 @@ const Profile = () => {
           Login
         </Button>
       </Container>
+
+      <Modal
+        show={showModal}
+        onHide={() => {
+          setShowModal(false);
+        }}
+      >
+        <Modal.Header closeButton>
+          {/* <Modal.Title>Modal heading</Modal.Title> */}
+        </Modal.Header>
+        <Modal.Body>{modalMessage}</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="danger"
+            onClick={() => {
+              setShowModal(false);
+              localStorage.removeItem("accessToken");
+              history.replace("/");
+            }}
+          >
+            Ok
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setShowModal(false);
+            }}
+          >
+            Cancel
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

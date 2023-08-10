@@ -1,13 +1,16 @@
 import axios from "axios";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import MyNavbar from "../components/MyNavbar";
-import { Container, Form, Button } from "react-bootstrap";
+import { Container, Form, Button, Modal } from "react-bootstrap";
 
 const Login = () => {
   const history = useHistory();
   const email_ref = useRef();
   const password_ref = useRef();
+
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
   //Form Submit
   const LoginHandler = async (e) => {
     e.preventDefault();
@@ -30,16 +33,26 @@ const Login = () => {
       localStorage.setItem("accessToken", getAccessToken);
 
       if (repsonse.data.status === "success") {
-        alert("Logged in successful.");
+        // alert("Logged in successful.");
+        setModalMessage("Logged in successful.redirecting...");
+        setShowModal(true);
       }
-      history.replace("/");
+      setTimeout(() => {
+        history.replace("/");
+      }, 2000);
     } catch (ex) {
       //Error Handling
       console.log(ex.response.data.errors[0].message);
       if (ex.response) {
-        alert(ex.response.data.errors[0].message);
+        //alert(ex.response.data.errors[0].message);
+        setModalMessage(ex.response.data.errors[0].message);
+        setShowModal(true);
       } else {
-        alert("Unknown error occured! Please try again after few minutes");
+        // alert("Unknown error occured! Please try again after few minutes");
+        setModalMessage(
+          "Unknown error occured! Please try again after few minutes"
+        );
+        setShowModal(true);
       }
     }
   };
@@ -90,6 +103,31 @@ const Login = () => {
           {/* <button type="submit">Login</button> */}
         </form>
       </Container>
+
+      <Modal
+        show={showModal}
+        onHide={() => {
+          setShowModal(false);
+        }}
+      >
+        <Modal.Header closeButton>
+          {/* <Modal.Title>Modal heading</Modal.Title> */}
+        </Modal.Header>
+        <Modal.Body>{modalMessage}</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setShowModal(false);
+            }}
+          >
+            Close
+          </Button>
+          {/* <Button variant="primary" onClick={() => {}}>
+            Save Changes
+          </Button> */}
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };
