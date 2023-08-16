@@ -35,7 +35,6 @@ const MainPage = () => {
         ) : (
           <>
             <center>
-              {" "}
               Nothing on your to-do. Please <Link to="/add">Add some</Link>
             </center>
           </>
