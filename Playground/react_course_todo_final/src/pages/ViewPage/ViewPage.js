@@ -1,9 +1,9 @@
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import AuthCheckBoolean from "../../middleware/AuthCheckBoolean";
 import NavBar from "../NavBar";
 
 const ViewPage = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const getParams = useParams();
 
@@ -34,7 +34,7 @@ const ViewPage = () => {
 
     localStorage.setItem("todo", JSON.stringify(getStorage));
 
-    history.replace("/");
+    navigate("/", { replace: true });
   };
 
   return (
@@ -44,7 +44,7 @@ const ViewPage = () => {
       <div className="todo_container">
         <button
           onClick={() => {
-            history.push("/");
+            navigate("/");
           }}
           style={{ background: "#e7e7e7", color: "#666" }}
         >
@@ -63,7 +63,6 @@ const ViewPage = () => {
         {AuthCheckBoolean() ? (
           <>
             <button style={{ background: "red" }} onClick={deleteTodo}>
-              {" "}
               Delete To-do
             </button>
           </>

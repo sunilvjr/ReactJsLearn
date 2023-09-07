@@ -1,7 +1,7 @@
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AuthCheck = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   //   if (localStorage.getItem("loggedIn")) {
   //     // Do nothing...
@@ -9,7 +9,7 @@ const AuthCheck = () => {
   //     history.replace("/login");
   //   }
 
-  !localStorage.getItem("loggedIn") && history.replace("/login");
+  !localStorage.getItem("loggedIn") && navigate("/login", { replace: true });
 
   //   localStorage.getItem("loggedIn") ? (() => {})() : history.replace("/login");
 };

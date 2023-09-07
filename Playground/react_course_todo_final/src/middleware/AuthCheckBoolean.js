@@ -1,7 +1,7 @@
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AuthCheckBoolean = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   let loggedIn = false;
 
