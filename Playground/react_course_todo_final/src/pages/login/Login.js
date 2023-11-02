@@ -2,7 +2,7 @@ import NavBar from "../NavBar";
 
 import { FaRegEye } from "react-icons/fa";
 import { CgOptions } from "react-icons/cg";
-import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import { Link, Route, useHistory, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ const Login = () => {
             <button
               onClick={() => {
                 alert("You are successfully logged in!");
-                navigate("/", { replace: true });
+                navigate("/", { repalce: true });
                 localStorage.setItem("loggedIn", true);
               }}
             >

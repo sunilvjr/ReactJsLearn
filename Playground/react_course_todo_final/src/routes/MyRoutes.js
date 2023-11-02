@@ -9,10 +9,10 @@ const MyRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/home" />}></Route>
-        <Route path="/home" element={<MainPage />} />
-        <Route path="/add" element={<AddToDo />}></Route>
-        <Route path="/login/*" element={<Login />} />
+        <Route path="/" element={<Navigate to="/home" />} exact></Route>
+        <Route path="/home" element={<MainPage />} exact />
+        <Route path="/add" exact element={<AddToDo />}></Route>
+        <Route path="/login" element={<Login />} />
         <Route path="/view/:id" element={<ViewPage />} />
         <Route path="*" element={<NotFound />}></Route>
       </Routes>

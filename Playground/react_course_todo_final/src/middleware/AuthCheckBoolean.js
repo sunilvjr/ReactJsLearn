@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 const AuthCheckBoolean = () => {
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   let loggedIn = false;
 

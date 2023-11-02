@@ -63,7 +63,6 @@ const ViewPage = () => {
         {AuthCheckBoolean() ? (
           <>
             <button style={{ background: "red" }} onClick={deleteTodo}>
-              {" "}
               Delete To-do
             </button>
           </>
